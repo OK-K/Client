@@ -55,7 +55,7 @@ $('#returnChooseGameMode').on('click', function (e) {
 });
 $('#middleComplexity').on('click', function (e) {
 			sendComplexity = new XMLHttpRequest();
-			sendComplexity.open('POST', '../pages/sendComplexity', true);
+			sendComplexity.open('POST', '../sendComplexity', true);
 			sendComplexity.send('level=!1!' + 'login=!' + getCook("login") + "!");
 			sendComplexity.onreadystatechange = function() {
 
