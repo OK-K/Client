@@ -56,3 +56,6 @@ function getDeck(name, inputJson)
 	}
 	return deck;
 }
+$('#playGame').on('click', function (e) {
+	document.location.href = "/pages/game.html";
+});
