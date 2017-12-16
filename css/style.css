@@ -1,0 +1,10 @@
+﻿table tr td
+{
+	width:20px;
+	height:20px;
+	border:1px solid black;
+}
+.hereShip
+{
+	background:red;
+}
