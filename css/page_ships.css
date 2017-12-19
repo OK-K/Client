@@ -53,6 +53,7 @@ h2{
 	margin-top: -385px;
 	margin-left: 0px;
 }
+
 table tr td
 {
 	height: 35px;
@@ -64,7 +65,15 @@ table {border-collapse:collapse;}
 {
 	background:red;
 }
+.hitting
+{
+	background:green;
+}
 
+.missing
+{
+	background:black;
+}
 
 .button{
 	width: 264px;
@@ -119,7 +128,7 @@ table {border-collapse:collapse;}
 	top: 0px;
 	opacity: 1;
 	padding-bottom: 10px;
-	height: 586px;
+	
 		}
 	button:link {	
 		color: #FFFFFF;
