@@ -1,4 +1,4 @@
-function setPlayerShips()
+﻿function setPlayerShips()
 {
 	getShips=new XMLHttpRequest();
 	var nameJson = "new_" + getCook('login') + ".json";
@@ -57,5 +57,21 @@ function getDeck(name, inputJson)
 	return deck;
 }
 $('#playGame').on('click', function (e) {
-	document.location.href = "/pages/game.html";
+	
+	runGame=new XMLHttpRequest();
+	var name = getCook('login');
+    runGame.open('POST','../runGame',true);
+    runGame.send("login=!" + name + "!");
+	runGame.onreadystatechange=function() 
+		{
+			if (runGame.readyState==4)
+				{ 
+				    if(runGame.responseText == '1')
+					{
+						document.location.href = "/pages/game.html";
+					}
+					
+				}
+		}
+	
 });
