@@ -13,6 +13,11 @@ $('#enemy > table td').on('click', function()
 					setShipsAfterShot();
 					 
 				}
+				if(sendShot.responseText == 'same')
+				{
+					alert("По этой клетки уже стреляли!");
+					
+				}
 			}
 			};
 });
