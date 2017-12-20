@@ -68,6 +68,36 @@ $('#middleComplexity').on('click', function (e) {
 			};
 });
 
+$('#hardComplexity').on('click', function (e) {
+			sendComplexity = new XMLHttpRequest();
+			sendComplexity.open('POST', '../sendComplexity', true);
+			sendComplexity.send('level=!2!' + 'login=!' + getCook("login") + "!");
+			sendComplexity.onreadystatechange = function() {
+
+			if (sendComplexity.readyState == 4) {
+				if (sendComplexity.responseText == "1")
+				{
+					 document.location.href = "../pages/playerShip.html";
+				}
+			}
+			};
+});
+
+$('#impossibleComplexity').on('click', function (e) {
+			sendComplexity = new XMLHttpRequest();
+			sendComplexity.open('POST', '../sendComplexity', true);
+			sendComplexity.send('level=!3!' + 'login=!' + getCook("login") + "!");
+			sendComplexity.onreadystatechange = function() {
+
+			if (sendComplexity.readyState == 4) {
+				if (sendComplexity.responseText == "1")
+				{
+					 document.location.href = "../pages/playerShip.html";
+				}
+			}
+			};
+});
+
 function getCook (name)
 {
 	var cook = document.cookie;
