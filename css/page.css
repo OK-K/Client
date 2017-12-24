@@ -1,0 +1,130 @@
+	@charset "utf-8";
+	
+	@font-face {
+		font-family: Lobster; 
+		src: url(../fonts/lobsterRegular.ttf); /* Путь к файлу со шрифтом */
+	}
+   
+	body {
+		background-color: #FFFFFF;
+		background-position: center;
+		background-size: cover;
+		background-attachment: fixed;
+		text-align: center;
+		background-image: url(../images/fon.png);
+		opacity: 0.95;
+	}
+
+	body img{
+		height: 300;
+		filter: alpha(Opacity=25);
+	}
+		
+	h1{
+		text-align: center;
+		font-size: 40pt;
+		font-family: "Lobster";
+		margin-bottom: 21px;
+		-webkit-box-shadow: 0 0;
+		box-shadow: 0 0;
+		text-shadow: 0px 0px 13px #FFFFFF;
+	}
+	
+	h2{
+		text-align: center;
+		font-size: 30pt;
+		font-family: Garamond;
+		margin-bottom: 21px;
+		-webkit-box-shadow: 0 0;
+		box-shadow: 0 0;
+	}
+		
+	p {
+		text-align: justify; /* Выравнивание по ширине */
+	}
+
+	#login{
+		position: relative;
+		height: 21px;
+		width: 221px;
+	}
+	
+	#labelLogin{
+		position: relative;
+		text-align: center;
+		top: 25px;
+	}
+	
+	.button{
+		position: relative;
+		margin-top: 18px;
+		width: 226px;
+		height: 61px;
+		font-size: 31pt;
+		font-family: Garamond;
+		font-weight: bold;
+		border-radius: 1px;
+		background-color: #A9CCE0;
+	}
+	
+	#aut_form{
+		position: relative;
+		margin-top: 92px;
+	}
+	
+	#footer {
+	position: relative;
+	color: #000000; /* Цвет текста */
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-left: 30px;
+	padding-bottom: 0px;
+	padding-left: 30px;
+	clear: left;
+	margin-left: 30%;
+	font-weight: bold;
+	font-size: 18pt;
+	text-shadow: 0px 0px 6px #FFFFFF;
+	}
+	
+	#content {
+		width: 800px;
+		margin: 0 auto;
+		overflow: hidden;
+		position: relative;
+		padding: 10px;
+		min-height: 417px;
+		box-shadow: 0 0 28px rgba(0,0,0,1);
+		image-rendering: optimizeQuality;
+		background-color: #FFFFFF;
+		-webkit-box-shadow: 0 0 28px rgba(0,0,0,1);
+		top: 0px;
+		opacity: 1;
+	}
+	
+	button:link {	
+		color: #FFFFFF;
+		text-decoration: none;
+		font-size: 101%;
+		min-width: 0px;
+	}
+	
+	button:visited {
+		text-decoration: none;
+		color: #FFFFFF;
+	}
+	
+button:hover {
+	text-decoration: none;
+	color: #000000;
+	}
+	
+button:active {
+	text-decoration: none;
+	font-size: 101%;
+	color: #FFFFFF;
+	
+}
+button {
+	color: #FFFFFF;
+	}
