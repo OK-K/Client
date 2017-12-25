@@ -83,6 +83,9 @@ $('#hardComplexity').on('click', function (e) {
 			};
 });
 
+$('#goBack').on('click', function (e) {
+	document.location.href = "../pages/playMenu.html";
+});
 $('#impossibleComplexity').on('click', function (e) {
 			sendComplexity = new XMLHttpRequest();
 			sendComplexity.open('POST', '../sendComplexity', true);

@@ -34,7 +34,7 @@ function setShipsAfterShot()
 			if (getShips.readyState==4)
 				{ 
 				    var jsonShip=eval( '('+getShips.responseText+')' );
-					var jsonMatrPlayer = jsonShip.game[0].ships;
+					jsonMatrPlayer = jsonShip.game[0].ships;
 					for (var i = 0; i < 10; i++)
 					{
 						for (var j = 0; j < 10; j++)
