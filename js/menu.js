@@ -26,6 +26,9 @@ $('#logBut').on('click', function (e) {
 			};
 			//document.location.href = "mainMenu.html";
 });
+$('#mainMenuButt').on('click', function (e) {
+	document.location.href = "../pages/mainMenu.html";
+});
 $('#playButt').on('click', function (e) {
 	document.location.href = "../pages/playMenu.html";
 });

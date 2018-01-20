@@ -42,6 +42,15 @@
 	p {
 		text-align: justify; /* Выравнивание по ширине */
 	}
+	
+	#congratulations{
+		text-align: center;
+		font-size: 25pt;
+		font-family: Garamond;
+		margin-bottom: 21px;
+		-webkit-box-shadow: 0 0;
+		box-shadow: 0 0;
+	}
 
 	#login{
 		position: relative;
