@@ -185,3 +185,9 @@ button:active {
 button {
 	color: #FFFFFF;
 	}
+#message{
+	margin-left: -90px;
+	/*text-align: center;*/
+	font-size: 25pt;
+	font-family: Garamond;
+}
