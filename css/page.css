@@ -137,3 +137,11 @@ button:active {
 button {
 	color: #FFFFFF;
 	}
+select {
+	text-align: center;
+		font-size: 25pt;
+		font-family: Garamond;
+		margin-bottom: 21px;
+		-webkit-box-shadow: 0 0;
+		box-shadow: 0 0;
+}
