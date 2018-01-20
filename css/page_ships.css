@@ -40,7 +40,10 @@ h2{
 		p {
 			text-align: justify; /* Выравнивание по ширине */
 		}
-
+#message{
+	font-size: medium;
+	
+}
 #fname{
 	position: relative;
 	padding-top: 8px;
