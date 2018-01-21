@@ -104,17 +104,22 @@ table {border-collapse:collapse;}
 	left: 247px;
 	margin-top: 33px;
 	top: -372px;
+	margin-left: 11px;
+	padding-left: 89px;
 }
 .button1{
-	position: relative;
-	width: 226px;
+	width: 292px;
 	height: 61px;
 	font-size: 31pt;
 	font-family: Garamond;
 	font-weight: bold;
 	border-radius: 1px;
 	background-color: #A9CCE0;
-	margin-left: -180px;
+	position: relative;
+	margin-left: 48px;
+	margin-right: 0px;
+	top: -455px;
+	left: -9px;
 }
 #change{
 	font-size: 30px;
@@ -173,7 +178,8 @@ table {border-collapse:collapse;}
 	top: 0px;
 	opacity: 1;
 	padding-bottom: 0px;
-	min-height: 700px;
+	min-height: 501px;
+	max-height: 699px;
 		}
 	button:link {	
 		color: #FFFFFF;
@@ -202,8 +208,10 @@ button {
 	color: #FFFFFF;
 	}
 #message{
-	margin-left: -90px;
-	/*text-align: center;*/
+	text-align: center;
 	font-size: 25pt;
 	font-family: Garamond;
+	position: relative;
+	top: -417px;
+	left: 293px;
 }
