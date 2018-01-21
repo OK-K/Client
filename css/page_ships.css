@@ -75,7 +75,8 @@ table tr td
 table {border-collapse:collapse;}
 .hereShip
 {
-	background-image: url(../images/hereShip.png);
+	background: transparent url(../images/hereShip.png) 50% 0px no-repeat;
+	/*background-image: url(../images/hereShip.png);*/
 }
 .hitting
 {
