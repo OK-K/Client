@@ -105,6 +105,17 @@ table {border-collapse:collapse;}
 	margin-top: 33px;
 	top: -372px;
 }
+.button1{
+	position: relative;
+	width: 226px;
+	height: 61px;
+	font-size: 31pt;
+	font-family: Garamond;
+	font-weight: bold;
+	border-radius: 1px;
+	background-color: #A9CCE0;
+	margin-left: -180px;
+}
 #change{
 	font-size: 30px;
 }
@@ -162,7 +173,7 @@ table {border-collapse:collapse;}
 	top: 0px;
 	opacity: 1;
 	padding-bottom: 0px;
-	max-height: 678px;
+	min-height: 700px;
 		}
 	button:link {	
 		color: #FFFFFF;
