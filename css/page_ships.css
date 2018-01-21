@@ -40,7 +40,10 @@ h2{
 		p {
 			text-align: justify; /* Выравнивание по ширине */
 		}
-
+#message{
+	font-size: medium;
+	
+}
 #fname{
 	position: relative;
 	padding-top: 8px;
@@ -72,18 +75,23 @@ table tr td
 table {border-collapse:collapse;}
 .hereShip
 {
-	background:red;
+	background: transparent url(../images/hereShip.png) 1% 0px no-repeat;
+	/*background-image: url(../images/hereShip.png);*/
 }
 .hitting
 {
-	background:green;
+	/*background: transparent url(../images/hitting.png) 0.1% 0px no-repeat;*/
+	background-image: url(../images/hitting.png);
 }
 
 .missing
 {
-	background:black;
+	background: transparent url(../images/missing.png) 1% 0px no-repeat;
 }
-
+.deadShip
+{
+	background: transparent url(../images/deadShip.png) 1% 0px no-repeat;
+}
 .button{
 	width: 264px;
 	height: 71px;
@@ -182,3 +190,9 @@ button:active {
 button {
 	color: #FFFFFF;
 	}
+#message{
+	margin-left: -90px;
+	/*text-align: center;*/
+	font-size: 25pt;
+	font-family: Garamond;
+}
