@@ -93,19 +93,18 @@ table {border-collapse:collapse;}
 	background: transparent url(../images/deadShip.png) 1% 0px no-repeat;
 }
 .button{
-	width: 264px;
-	height: 71px;
-	font-size: 31pt;
-	font-family: Garamond;
-	font-weight: bold;
-	border-radius: 1px;
-	background-color: #A9CCE0;
-	position: relative;
-	left: 247px;
-	margin-top: 33px;
-	top: -372px;
-	margin-left: 11px;
-	padding-left: 89px;
+	width: 264px; 
+height: 71px; 
+font-size: 31pt; 
+font-family: Garamond; 
+font-weight: bold; 
+border-radius: 1px; 
+background-color: #A9CCE0; 
+position: relative; 
+left: 247px; 
+margin-top: 33px; 
+top: -372px; 
+margin-left: -13px; 
 }
 .button1{
 	width: 292px;
@@ -153,7 +152,7 @@ table {border-collapse:collapse;}
 	padding-top: 10px;
 	padding-right: 10px;
 	padding-left: 10px;
-	min-height: 586px;
+	max-height: 586px;
 	box-shadow: 0 0 28px rgba(0,0,0,1);
 	image-rendering: optimizeQuality;
 	background-color: #FFFFFF;
