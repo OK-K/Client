@@ -93,17 +93,32 @@ table {border-collapse:collapse;}
 	background: transparent url(../images/deadShip.png) 1% 0px no-repeat;
 }
 .button{
-	width: 264px;
-	height: 71px;
+	width: 264px; 
+height: 71px; 
+font-size: 31pt; 
+font-family: Garamond; 
+font-weight: bold; 
+border-radius: 1px; 
+background-color: #A9CCE0; 
+position: relative; 
+left: 247px; 
+margin-top: 33px; 
+top: -372px; 
+margin-left: -13px; 
+}
+.button1{
+	width: 292px;
+	height: 61px;
 	font-size: 31pt;
 	font-family: Garamond;
 	font-weight: bold;
 	border-radius: 1px;
 	background-color: #A9CCE0;
 	position: relative;
-	left: 247px;
-	margin-top: 33px;
-	top: -372px;
+	margin-left: 48px;
+	margin-right: 0px;
+	top: -455px;
+	left: -9px;
 }
 #change{
 	font-size: 30px;
@@ -137,7 +152,7 @@ table {border-collapse:collapse;}
 	padding-top: 10px;
 	padding-right: 10px;
 	padding-left: 10px;
-	min-height: 586px;
+	max-height: 586px;
 	box-shadow: 0 0 28px rgba(0,0,0,1);
 	image-rendering: optimizeQuality;
 	background-color: #FFFFFF;
@@ -162,7 +177,8 @@ table {border-collapse:collapse;}
 	top: 0px;
 	opacity: 1;
 	padding-bottom: 0px;
-	max-height: 678px;
+	min-height: 501px;
+	max-height: 699px;
 		}
 	button:link {	
 		color: #FFFFFF;
@@ -191,8 +207,10 @@ button {
 	color: #FFFFFF;
 	}
 #message{
-	margin-left: -90px;
-	/*text-align: center;*/
+	text-align: center;
 	font-size: 25pt;
 	font-family: Garamond;
+	position: relative;
+	top: -417px;
+	left: 293px;
 }
