@@ -4,6 +4,21 @@
 		font-family: Lobster; 
 		src: url(../fonts/lobsterRegular.ttf); /* Путь к файлу со шрифтом */
 	}
+	
+	a{
+		text-align: center;
+		font-family: Lobster; 
+		src: url(../fonts/lobsterRegular.ttf); /* Путь к файлу со шрифтом */
+		font-size: 15pt;
+		text-decoration: none;
+		color: blue;
+	}
+	a:hover{
+		color:black;
+	}
+	a:visited{
+		color:black;
+	}
    
 	body {
 		background-color: #FFFFFF;
