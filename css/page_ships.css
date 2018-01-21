@@ -75,21 +75,22 @@ table tr td
 table {border-collapse:collapse;}
 .hereShip
 {
-	background: transparent url(../images/hereShip.png) 50% 0px no-repeat;
+	background: transparent url(../images/hereShip.png) 1% 0px no-repeat;
 	/*background-image: url(../images/hereShip.png);*/
 }
 .hitting
 {
+	/*background: transparent url(../images/hitting.png) 0.1% 0px no-repeat;*/
 	background-image: url(../images/hitting.png);
 }
 
 .missing
 {
-	background-image: url(../images/missing.png);
+	background: transparent url(../images/missing.png) 1% 0px no-repeat;
 }
 .deadShip
 {
-	background-image: url(../images/deadShip.png);
+	background: transparent url(../images/deadShip.png) 1% 0px no-repeat;
 }
 .button{
 	width: 264px;
