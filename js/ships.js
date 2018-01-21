@@ -84,6 +84,8 @@ $('#change').on('click', function (e) {
 });
 $('#playGame').on('click', function (e) {
 	
+	
+	getNewMatr();
 	changeShips=new XMLHttpRequest();
 	var name = getCook('login');
     changeShips.open('POST','../changeShipByPlayer',true);
@@ -94,8 +96,7 @@ $('#playGame').on('click', function (e) {
 				{ 
 				    if(changeShips.responseText == '1')
 					{
-						setPlayerShips();
-						return;
+						
 					}
 				}
 		}
@@ -137,7 +138,7 @@ $('#pl > table td').on('dblclick', function () {
 });
 //событие нажатия кнопки
 $('#pl > table td').on('click', function () {
-	 
+	 getNewMatr();
 	if (!choose)
 	{
 		if (!($(this).hasClass('hereShip')))
@@ -149,10 +150,15 @@ $('#pl > table td').on('click', function () {
 		previous_id = old_id;
 		previous_true_id = old_id;
 		orient = false;
+		change_or_with_shift_right = false;
+		change_or_with_shift_left = false;
 		deck_now = getDeck(old_id,changeShipsRequest);
 		x_new = 0;
 		x_old = 0;
-		
+		if (deck_now == '5')
+		{
+			i++;
+		}
 		if (deck_now == '6')
 			deck_now = getDeck(old_id,jsonMatrPlayer);
 		
@@ -174,8 +180,9 @@ $('#pl > table td').on('click', function () {
 			return;
 		}
 		choose = false;
-		countChangeShips++;
-		changeShipsRequest  += 'deck=!' + deck_now + '!old!' + getPointsOfShip(old_id,5) + '!new!' + getPointsOfShip($(this).attr('id'),deck_now) + 'count!=' + countChangeShips + '!';
+		change_or_with_shift_right = false;
+		change_or_with_shift_left = false;
+		orient = false;
 		return;
 	}
 });
@@ -198,7 +205,15 @@ $("table td").hover(function(){
 				if (x_new < x_old)
 				{
 					alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
+					if (orient)
+					{
+						if (gorizontal)
+							gorizontal = false;
+						else gorizontal = true;
+						orient = false;
+					}
 					choose = false;
+					first_change = true;
 					setNewShip(old_id,'hereShip');
 					return;
 				}
@@ -215,7 +230,15 @@ $("table td").hover(function(){
 				if (x_new > x_old)
 				{
 					alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
+					if (orient)
+					{
+						if (gorizontal)
+							gorizontal = false;
+						else gorizontal = true;
+						orient = false;
+					}
 					choose = false;
+					first_change = true;
 					setNewShip(old_id,'hereShip');
 					return;
 				}
@@ -232,7 +255,15 @@ $("table td").hover(function(){
 				if (x_new < x_old)
 				{
 					alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
+					if (orient)
+					{
+						if (gorizontal)
+							gorizontal = false;
+						else gorizontal = true;
+						orient = false;
+					}
 					choose = false;
+					first_change = true;
 					setNewShip(old_id,'hereShip');
 					return;
 				}
@@ -249,7 +280,15 @@ $("table td").hover(function(){
 				if (x_new > x_old)
 				{
 					alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
+					if (orient)
+					{
+						if (gorizontal)
+							gorizontal = false;
+						else gorizontal = true;
+						orient = false;
+					}
 					choose = false;
+					first_change = true;
 					setNewShip(old_id,'hereShip');
 					return;
 				}
@@ -266,6 +305,7 @@ $("table td").hover(function(){
 					$('#' + leave_id).removeClass('missing');
 				leave_id = 0;
 			}
+			
 			if ($(this).hasClass('hereShip') || checkAllDecks($(this).attr('id'))) 
 			{
 				if (deck_now == '1')
@@ -299,12 +339,23 @@ $("table td").hover(function(){
 		}, function(){
 			if (!choose)
 				return;
+			new_id = $(this).attr('id');
+			if(change_or_with_shift_right)
+			{
+				getCurrentPoint($(this).attr('id'));
+				new_id = currentX + '_' + (currentY + place - 1 - countDifferenceExtremeCurrent);
+			}
+			if (change_or_with_shift_left)
+			{
+				getCurrentPoint($(this).attr('id'));
+				new_id = (currentX  - place + 1 + countDifferenceExtremeCurrent) + '_' + currentY;
+			}
 			//countDifferenceExtremeCurrent = getFirstDeck($(this).attr('id'),deck_now);
-			if ($(this).hasClass('missing')) //добавить реализацию с палубами больше 1
+			if ($('#' + new_id).hasClass('missing')) //добавить реализацию с палубами больше 1
 			{
 				if (deck_now == '1')
 				{
-					$(this).removeClass('missing');
+					$('#' + new_id).removeClass('missing');
 					leave_id = $(this).attr('id');
 					leave_class = 'missing';
 					return;
@@ -312,7 +363,7 @@ $("table td").hover(function(){
 				{
 					if (!gorizontal)
 				{
-					getCurrentPoint($(this).attr('id'));
+					getCurrentPoint(new_id);
 					currentX = currentX - countDifferenceExtremeCurrent;
 					var countCurrentDeck = 0;
 					while(countCurrentDeck != deck_now)
@@ -324,7 +375,7 @@ $("table td").hover(function(){
 					}
 				} else 
 				{
-					getCurrentPoint($(this).attr('id'));
+					getCurrentPoint(new_id);
 					currentY = currentY + countDifferenceExtremeCurrent;
 					var countCurrentDeck = 0;
 					while(countCurrentDeck != deck_now)
@@ -352,7 +403,7 @@ $("table td").hover(function(){
 				
 				if (!gorizontal)
 				{
-					getCurrentPoint($(this).attr('id'));
+					getCurrentPoint(new_id);
 					currentX = currentX - countDifferenceExtremeCurrent;
 					var countCurrentDeck = 0;
 					while(countCurrentDeck != deck_now)
@@ -364,7 +415,7 @@ $("table td").hover(function(){
 					}
 				} else 
 				{
-					getCurrentPoint($(this).attr('id'));
+					getCurrentPoint(new_id);
 					currentY = currentY + countDifferenceExtremeCurrent;
 					var countCurrentDeck = 0;
 					while(countCurrentDeck != deck_now)
@@ -465,6 +516,18 @@ function getFirstDeck(id,deck)
 //ставим выбранный корабль в выбранное место
 function setNewShip(idCurrentPoint,setClass)
 {
+	if(change_or_with_shift_right && !first_change)
+	{
+		getCurrentPoint(idCurrentPoint);
+		idCurrentPoint = currentX + '_' + (currentY + place - 1 - countDifferenceExtremeCurrent);
+	}
+	if (change_or_with_shift_left && !first_change)
+	{
+		getCurrentPoint(idCurrentPoint);
+		idCurrentPoint = (currentX  - place + 1 + countDifferenceExtremeCurrent) + '_' + currentY;
+	}
+	first_change = false;
+	first_change = false;
 	if (!gorizontal)
 				{
 					if (!firstMove)
@@ -528,6 +591,17 @@ function setNewShip(idCurrentPoint,setClass)
 //проверка близ лежащих кораблей рядом с выбранным кораблем
 function checkAllDecks(idCurrentPoint)
 {
+	if(change_or_with_shift_right && !first_change)
+	{
+		getCurrentPoint(idCurrentPoint);
+		idCurrentPoint = currentX + '_' + (currentY + place - 1 - countDifferenceExtremeCurrent);
+	}
+	if (change_or_with_shift_left && !first_change)
+	{
+		getCurrentPoint(idCurrentPoint);
+		idCurrentPoint = (currentX  - place + 1 + countDifferenceExtremeCurrent) + '_' + currentY;
+	}
+	first_change = false;
 	var check = false;
 	if (deck_now == '1')
 	{
@@ -634,7 +708,7 @@ function getPointsOfShip(idPoint, deck)
 		
 		
 	} else 
-		getOrientation(idPoint);
+		//getOrientation(idPoint);
 	if (!gorizontal)
 		{
 			getCurrentPoint(idPoint);
@@ -686,6 +760,7 @@ $("table").mouseleave(function(){
 				orient = false;
 			}
 			choose = false;
+			first_change = true;
 			setNewShip(old_id,'hereShip');
 			alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
 		}
@@ -695,6 +770,17 @@ $("table").mouseleave(function(){
 //узнаем, есть ли палубы рядом с границей - если есть, возвращаем 0 или 1 (i = 0 или j = 0)
 function findNearBorderPoint(id)
 {
+	if(change_or_with_shift_right && !first_change)
+	{
+		getCurrentPoint(id);
+		id = currentX + '_' + (currentY + place - 1 - countDifferenceExtremeCurrent);
+	}
+	if (change_or_with_shift_left && !first_change)
+	{
+		getCurrentPoint(id);
+		id = (currentX  - place + 1 + countDifferenceExtremeCurrent) + '_' + currentY;
+	}
+	first_change = false;
 	//getOrientation(id);
 	if (!gorizontal)
 		{
@@ -734,12 +820,13 @@ function changeOrientation()
 {
 	getOrientation(old_id);
 	firstMove = true;
+	place = 0;
 	//сейчас корабль вертикальный
 	if (!gorizontal)
 		{
 			getCurrentPoint(old_id);
 			
-			var place = 0;
+			
 			while (place != deck_now)
 			{
 				place++;
@@ -760,24 +847,20 @@ function changeOrientation()
 					}
 					gorizontal = true;
 					getCurrentPoint(old_id);
-					new_y = currentY - countDifferenceExtremeCurrent;
-					if ($('#' + old_id).hasClass('hereShip') || checkAllDecks(currentX + '_' + new_y)) 
+					if ($('#' + old_id).hasClass('hereShip') || checkAllDecks(old_id)) 
 					{
-						getCurrentPoint(old_id);
-						new_y = currentY - countDifferenceExtremeCurrent;
 						choose = true;
 						orient = true;
-						setNewShip(currentX + '_' + new_y,'missing');
+						setNewShip(old_id,'missing');
 						return;
 					} else 
 					{
-						getCurrentPoint(old_id);
-						new_y = currentY - countDifferenceExtremeCurrent;
-						setNewShip(currentX + '_' + new_y,'hereShip');
+						setNewShip(old_id,'hereShip');
 						return;
 					}
 			} else 
 			{
+				
 					getCurrentPoint(old_id);
 					currentX = currentX - countDifferenceExtremeCurrent;
 					var countCurrentDeck = 0;
@@ -790,19 +873,21 @@ function changeOrientation()
 					}
 					getCurrentPoint(old_id);
 					gorizontal = true;
-					if ($('#' + old_id).hasClass('hereShip') || checkAllDecks(old_id)) 
+					var new_y = currentY + place - 1 - countDifferenceExtremeCurrent;
+					shift_id = currentX + '_' + new_y;
+					if ($('#' + shift_id).hasClass('hereShip') || checkAllDecks(shift_id)) 
 					{
+						change_or_with_shift_right = true;
+						first_change = true;
 						choose = true;
 						orient = true;
-						getCurrentPoint(old_id);
-						var new_y = currentY + place - 1;
-						setNewShip(currentX + '_' + new_y,'missing');
+						setNewShip(shift_id,'missing');
 						return;
 					} else 
 					{
-						getCurrentPoint(old_id);
-						var new_y = currentY + place - 1;
-						setNewShip(currentX + '_' + new_y,'hereShip');
+						change_or_with_shift_right = false;
+						first_change = false;
+						setNewShip(shift_id,'hereShip');
 						return;
 					}
 			}
@@ -810,8 +895,7 @@ function changeOrientation()
 		else 
 			{
 				getCurrentPoint(old_id);
-			
-				var place = 0;
+				place = 0;
 				while (place != deck_now)
 				{
 					place++;
@@ -832,20 +916,21 @@ function changeOrientation()
 					}
 					gorizontal = false;
 					getCurrentPoint(old_id);
-					new_x = currentX + countDifferenceExtremeCurrent;
-					if ($('#' + old_id).hasClass('hereShip') || checkAllDecks(new_x + '_' + currentY)) 
+					var new_x = currentX - place + 1 + countDifferenceExtremeCurrent;
+					shift_id = new_x + '_' + currentY;
+					if ($('#' + shift_id).hasClass('hereShip') || checkAllDecks(shift_id)) 
 					{
-						getCurrentPoint(old_id);
-						var new_x = currentX + place - 1;
+						change_or_with_shift_left = true;
+						first_change = true;
 						choose = true;
 						orient = true;
-						setNewShip(new_x + '_' + currentY,'missing');
+						setNewShip(shift_id,'missing');
 						return;
 					} else 
 					{
-						getCurrentPoint(old_id);
-						var new_x = currentX + place - 1;
-						setNewShip(new_x + '_' + currentY,'hereShip');
+						change_or_with_shift_left = false;
+						first_change = false;
+						setNewShip(shift_id,'hereShip');
 						return;
 					}
 			}else 
@@ -866,19 +951,79 @@ function changeOrientation()
 					{
 						choose = true;
 						orient = true;
-						getCurrentPoint(old_id);
-						
-						new_x = currentX + countDifferenceExtremeCurrent;
-						setNewShip(new_x + '_' + currentY,'missing');
+						setNewShip(old_id,'missing');
 						return;
 					} else 
 					{
-						getCurrentPoint(old_id);
-						new_x = currentX + countDifferenceExtremeCurrent;
-						setNewShip(new_x + '_' + currentY,'hereShip');
+						setNewShip(old_id,'hereShip');
 						return;
 					}
 			}
 			}
 	
 }
+
+function getNewMatr()
+{
+	changeShipsRequest = "";
+	var deck_val = 0;
+	for (var i = 0; i < 10; i++)
+	{
+		for (var j = 0; j < 10; j++)
+		{
+			if ($('#' + i + '_' + j).hasClass('hereShip'))
+			{
+				deck_val++;
+				deck_val += getDeckFromHtml(i,j,i,j);
+				changeShipsRequest += i + '_' + j + '=!' + deck_val + '!';
+				deck_val = 0;
+	1		} else 
+			changeShipsRequest += i + '_' + j + '=!5!';
+		}
+	}
+}
+
+function getDeckFromHtml(i,j,x,y)
+{
+	var result = 0;
+	ii = i;
+	jj = j;
+	if ($('#' + (ii + 1) + '_' + jj).hasClass('hereShip'))
+	{
+		while($('#' + (ii + 1) + '_' + jj).hasClass('hereShip'))
+		{
+			result++;
+			ii++;
+		}
+		
+	}
+	if ($('#' + (x - 1) + '_' + jj).hasClass('hereShip'))
+	{
+		while($('#' + (x - 1) + '_' + jj).hasClass('hereShip'))
+		{
+			result++;
+			x--;
+		}
+		return result;
+	}
+	
+	if ($('#' + ii + '_' + (jj + 1)).hasClass('hereShip'))
+	{
+		while($('#' + ii + '_' + (jj + 1)).hasClass('hereShip'))
+		{
+			result++;
+			jj++;
+		}
+		
+	}
+	if ($('#' + ii + '_' + (y-1)).hasClass('hereShip'))
+	{
+		while($('#' + ii + '_' + (y - 1)).hasClass('hereShip'))
+		{
+			result++;
+			y--;
+		}
+		return result;
+	}
+	return result;
+	}
