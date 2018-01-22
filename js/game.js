@@ -1,6 +1,112 @@
 
+$(document).ready(function(){
+	var mode = getCook('mode');
+	error = false;
+	getMyTurn();
+	if (turn)
+	{
+		$('#message').html('<p >Ваш ход!</p> <br>');
+	} else $('#message').html('<p >Ожидайте выстрела противника!</p> <br>');
+	
+	setInterval(function(){
+		getMyTurn();
+		if (turn)
+		{
+			$('#message').html('<p >Ваш ход!</p> <br>');
+		} else $('#message').html('<p >Ожидайте выстрела противника!</p> <br>');
+	},3000);
+	if (mode == 'playerwithplayer')
+	{
+		/*sendStopWait = new XMLHttpRequest();
+		sendStopWait.open('POST', '../clearWaiting', true);
+		sendStopWait.send('login=!' + getCook("login") + "!");
+		sendStopWait.onreadystatechange = function() {
+
+			if (sendStopWait.readyState == 4) {
+				if (sendStopWait.responseText == "1")
+				{
+					error = false;
+				}
+			}
+		} */
+	}
+});
+
+
+$('#saveButt').on('click', function()
+{
+	saveGame = new XMLHttpRequest();
+	saveGame.open('POST', '../saveGame', true);
+	saveGame.send('login=!' + getCook("login") + "!");
+	saveGame.onreadystatechange = function() {
+
+			if (saveGame.readyState == 4) {
+				if (saveGame.responseText == "1")
+				{
+					alert('Игра сохранена успешно!');
+					return;
+				}
+			}
+	}
+});
+
+function getMyTurn()
+{
+	turn = false;
+	var mode = getCook('mode');
+	if (mode == 'playerwithplayer' && !error)
+	{
+		checkTurn = new XMLHttpRequest();
+		checkTurn.open('POST', '../getTurn', true);
+		checkTurn.send('login=!' + getCook("login") + "!");
+		checkTurn.onreadystatechange = function() {
+
+			if (checkTurn.readyState == 4) {
+				if (checkTurn.responseText == "1")
+				{
+					turn = false;
+				}
+				if (checkTurn.responseText == "0")
+					turn = true;
+			}
+	}
+	}
+	return;
+}
+
 $('#enemy > table td').on('click', function()
 {
+	var mode = getCook('mode');
+	
+	if (mode == 'playerwithplayer')
+	{
+		if (turn)
+		{
+			var shot_id = $(this).attr('id');
+			sendShot = new XMLHttpRequest();
+			sendShot.open('POST', '../sendShotPlayer', true);
+			sendShot.send('login=!' + getCook("login") + "!shot=!" + shot_id + "!");
+			sendShot.onreadystatechange = function() {
+				if (sendShot.readyState == 4) {
+				if (sendShot.responseText == "1")
+				{
+					setShipsAfterShot();
+				}
+				if (sendShot.responseText == "2")
+				{
+					setShipsAfterShot();
+					getMyTurn();
+				}
+				if(sendShot.responseText == 'same')
+				{
+					alert("По этой клетки уже стреляли!");
+					
+				}
+				}
+			}
+			
+		} else alert('Сейчас не ваш ход!');
+	} 
 	var shot_id = $(this).attr('id');
 	sendShot = new XMLHttpRequest();
 	sendShot.open('POST', '../sendShotAI', true);
@@ -16,6 +122,21 @@ $('#enemy > table td').on('click', function()
 				if(sendShot.responseText == 'same')
 				{
 					alert("По этой клетки уже стреляли!");
+					
+				}
+				if(sendShot.responseText == 'lose=!one!')
+				{
+
+					var newLogin = getCook('login');
+					document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!one!; path=/; expires="
+					document.location.href = "/pages/endOfGame.html";
+					
+				}
+				if(sendShot.responseText == 'lose=!two!')
+				{
+					var newLogin = getCook('login');
+					document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!two!; path=/; expires="
+					document.location.href = "/pages/endOfGame.html";
 					
 				}
 			}
@@ -72,4 +193,14 @@ function setShipsAfterShot()
 					}
 					}
 				}
+				
+	/*getTurn = new XMLHttpRequest();
+	getTurn.open('POST', '../getTurn', true);
+	getTurn.send('login=!' + getCook("login"));
+	getTurn.onreadystatechange = function() {
+
+			if (sendShot.readyState == 4) {
+				if (sendShot.responseText == "1")
+			}
+	} */
 		}

@@ -2,8 +2,13 @@
 
 function setPlayerShips()
 {
+	var save = getCook('save');
+	if (save == 'yes')
+	{
+		var nameJson = "save_" + getCook('login') + ".json";
+	} else var nameJson = "new_" + getCook('login') + ".json";
 	getShips=new XMLHttpRequest();
-	var nameJson = "new_" + getCook('login') + ".json";
+	
     getShips.open('GET','../json/' + nameJson,true);
     getShips.send();
 	getShips.onreadystatechange=function() 
@@ -22,6 +27,29 @@ function setPlayerShips()
 							{
 								$('#' + i + '_' + j).addClass('hereShip')
 							}
+							if (deck == '-1' || deck == '-2' || deck =='-3' || deck == '-4' || deck == '0')
+							{
+								$('#' + i + '_' + j).addClass('hitting');
+							}
+							if (deck == '-5')
+								$('#' + i + '_' + j).addClass('missing');
+						}
+					}
+					
+					jsonMatrPlayer = jsonShip.game[1].ships;
+					for (var i = 0; i < 10; i++)
+					{
+						for (var j = 0; j < 10; j++)
+						{
+							$('#' + i + '_' + j + '_E').removeClass('hereShip')
+							var deck = getDeck(i + '_' + j,jsonMatrPlayer);
+							
+							if (deck == '-1' || deck == '-2' || deck =='-3' || deck == '-4' || deck == '0')
+							{
+								$('#' + i + '_' + j + '_E').addClass('hitting');
+							}
+							if (deck == '-5')
+								$('#' + i + '_' + j + '_E').addClass('missing');
 						}
 					}
 				}
@@ -100,6 +128,28 @@ $('#playGame').on('click', function (e) {
 					}
 				}
 		}
+		var mode = getCook('mode');
+		if (mode == 'playerwithplayer')
+		{
+			setInterval(function(){
+				runGame=new XMLHttpRequest();
+				var name = getCook('login');
+				runGame.open('POST','../runGameWithPlayer',true);
+				runGame.send("login=!" + name + "!");
+				runGame.onreadystatechange=function() 
+					{
+						if (runGame.readyState==4)
+							{ 
+								if(runGame.responseText == '1')
+								{
+									document.location.href = "/pages/game.html";
+								}
+								
+							}
+					}
+			},5000);
+			return;
+		} 
 	runGame=new XMLHttpRequest();
 	var name = getCook('login');
     runGame.open('POST','../runGame',true);
@@ -193,6 +243,7 @@ $("table td").hover(function(){
 			if (!choose)
 				return;
 			new_id = $(this).attr('id');
+			if (deck_now != '1')
 			var vall = findNearBorderPoint(previous_id);
 			//у верхнего края
 			if (vall == 0)
