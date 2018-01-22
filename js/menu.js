@@ -33,16 +33,92 @@ $('#reestablishButt').on('click', function (e) {
 	//document.location.href = "../pages/chooseSave.html";
 });
 $('#mainMenuButt').on('click', function (e) {
+	
 	document.location.href = "../pages/mainMenu.html";
+		
+	
+});
+
+$('#playAgain').on('click', function (e) {
+	var newLogin = getCook('login');
+	var mode = getCook('mode');
+		if (mode == 'playerwithplayer' && !error)
+		{
+			document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!none!; path=/; expires=";
+			document.location.href = "../pages/playMenu.html";
+			return;
+		}
+	var nameJson = "new_" + getCook('login') + ".json";
+	document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!you!; path=/; expires=";
+	getShips=new XMLHttpRequest();
+	
+    getShips.open('GET','../json/' + nameJson,true);
+    getShips.send();
+	getShips.onreadystatechange=function() 
+		{
+			if (getShips.readyState==4)
+				{ 
+				    //var jsonShip=eval( '('+getShips.responseText+')' );
+					var lvl = getDeck('lvl',getShips.responseText);
+					
+					deleteGame = new XMLHttpRequest();
+					deleteGame.open('POST', '../deleteGame', true);
+					deleteGame.send('login=!' + getCook('login') + "!");
+					deleteGame.onreadystatechange = function() {
+
+					if (deleteGame.readyState == 4) {
+						if (deleteGame.responseText == "1")
+						{
+							sendComplexity = new XMLHttpRequest();
+							sendComplexity.open('POST', '../sendComplexity', true);
+							sendComplexity.send('level=!' + lvl + '!' + 'login=!' + getCook("login") + "!");
+							sendComplexity.onreadystatechange = function() {
+
+							if (sendComplexity.readyState == 4) {
+								if (sendComplexity.responseText == "1")
+								{
+									 document.location.href = "../pages/playerShip.html";
+								}
+							}
+							};
+						}
+					}
+					}
+				}
+		}
+
+});
+$('#endGame').on('click', function (e) {
+	
+	var newLogin = getCook('login');
+	document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!you!; path=/; expires=";
+	document.location.href = "../pages/endOfGame.html";
+	
 });
 $('#playButt').on('click', function (e) {
+	
 	document.location.href = "../pages/playMenu.html";
+	
 });
 $('#returnMainMenuButt').on('click', function (e) {
 	document.location.href = "../pages/mainMenu.html";
 });
 $('#newGameButt').on('click', function (e) {
-	document.location.href = "../pages/chooseGameMode.html";
+	deleteGame = new XMLHttpRequest();
+	deleteGame.open('POST', '../deleteGameSave', true);
+	deleteGame.send('login=!' + getCook('login') + "!");
+	deleteGame.onreadystatechange = function() {
+
+	if (deleteGame.readyState == 4) {
+		if (deleteGame.responseText == "1")
+		{
+			var newLogin = getCook('login');
+			document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!none!; path=/; expires=";
+			document.location.href = "../pages/chooseGameMode.html";
+		}
+	}
+	}
+	
 });
 $('#returnPlayMenu').on('click', function (e) {
 	document.location.href = "../pages/playMenu.html";
@@ -164,6 +240,38 @@ $('#reestablishButt').on('click', function (e) {
 	}
 	
 });
+
+
+function getDeck(name, inputJson)
+{
+	var matr = inputJson;
+	var index = matr.lastIndexOf(name);
+	if (index == -1)
+		return '6';
+	var ch = "";
+	var indBegin
+	for (var i = index; i < matr.length; i++)
+	{
+		ch = matr[i];
+		if (ch === "!")
+		{
+			indBegin = i + 1;
+			break;
+		}
+	}
+	if (matr === "")
+		return matr;
+	var deck = "";
+	ch = "";
+	ch = matr[indBegin];
+	while (ch != "!")
+	{
+		deck += matr[indBegin];
+		indBegin++;
+		ch = matr[indBegin];
+	}
+	return deck;
+}
 
 function getCook (name)
 {

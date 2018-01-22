@@ -203,6 +203,10 @@ button:active {
 	color: #FFFFFF;
 	
 }
+.displayNone
+{
+	display:none;
+}
 button {
 	color: #FFFFFF;
 	}

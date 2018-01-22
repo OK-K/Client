@@ -263,7 +263,7 @@ $("table td").hover(function(){
 				
 				if (x_new < x_old)
 				{
-					alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
+					//alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
 					if (orient)
 					{
 						if (gorizontal)
@@ -288,7 +288,7 @@ $("table td").hover(function(){
 				
 				if (x_new > x_old)
 				{
-					alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
+					//alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
 					if (orient)
 					{
 						if (gorizontal)
@@ -313,7 +313,7 @@ $("table td").hover(function(){
 				
 				if (x_new < x_old)
 				{
-					alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
+					//alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
 					if (orient)
 					{
 						if (gorizontal)
@@ -338,7 +338,7 @@ $("table td").hover(function(){
 				
 				if (x_new > x_old)
 				{
-					alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
+					//alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
 					if (orient)
 					{
 						if (gorizontal)
@@ -821,7 +821,7 @@ $("table").mouseleave(function(){
 			choose = false;
 			first_change = true;
 			setNewShip(old_id,'hereShip');
-			alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
+			//alert('КОРАБЛЬ ВЫШЕЛ ЗА КРАЙ ПОЛЯ!');
 		}
 	}
 });

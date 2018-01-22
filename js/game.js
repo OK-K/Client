@@ -5,6 +5,7 @@ $(document).ready(function(){
 	
 	if (mode == 'playerwithplayer' && !error)
 	{
+		$('#saveButt').addClass('displayNone');
 		checkTurn = new XMLHttpRequest();
 		checkTurn.open('POST', '../getTurn', true);
 		checkTurn.send('login=!' + getCook("login") + "!");
@@ -51,26 +52,34 @@ $(document).ready(function(){
 					$('#message').html('<p >Ваш ход!</p> <br>');
 					setShipsAfterShot();
 				}
+				
+				if(checkTurn.responseText == 'lose=!you!')
+					{
+
+						var newLogin = getCook('login');
+						document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!you!; path=/; expires="
+						document.location.href = "/pages/endOfGame.html";
+					}
+					if(checkTurn.responseText == 'lose=!notyou!')
+					{
+						var newLogin = getCook('login');
+						document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!notyou!; path=/; expires="
+						document.location.href = "/pages/endOfGame.html";
+					}
+					if(checkTurn.responseText == 'end')
+					{
+						var newLogin = getCook('login');
+						document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!notyou!; path=/; expires="
+						document.location.href = "/pages/endOfGame.html";
+					}
 			}
 	}
 	}
 		
 	},1500);
-	if (mode == 'playerwithplayer')
-	{
-		/*sendStopWait = new XMLHttpRequest();
-		sendStopWait.open('POST', '../clearWaiting', true);
-		sendStopWait.send('login=!' + getCook("login") + "!");
-		sendStopWait.onreadystatechange = function() {
-
-			if (sendStopWait.readyState == 4) {
-				if (sendStopWait.responseText == "1")
-				{
-					error = false;
-				}
-			}
-		} */
-	}
+	
+	
+	
 });
 
 
@@ -91,39 +100,7 @@ $('#saveButt').on('click', function()
 	}
 });
 
-/*function getMyTurn()
-{
-	turn2 = false;
-	var mode = getCook('mode');
-	if (mode == 'playerwithplayer' && !error)
-	{
-		checkTurn = new XMLHttpRequest();
-		checkTurn.open('POST', '../getTurn', true);
-		checkTurn.send('login=!' + getCook("login") + "!");
-		checkTurn.onreadystatechange = function() {
 
-			if (checkTurn.readyState == 4) {
-				if (checkTurn.responseText == "1")
-				{
-					text1 = checkTurn.responseText;
-					turn2 = false;
-					return;
-				}
-					
-				if (checkTurn.responseText == "0")
-				{
-					turn2 = true;
-					text1 = checkTurn.responseText;
-					return;
-				}
-				return;
-			}
-			return;
-	}
-	return;
-	}
-	return;
-} */
 
 $('#enemy > table td').on('click', function()
 {
@@ -168,6 +145,22 @@ $('#enemy > table td').on('click', function()
 						alert("По этой клетки уже стреляли!");
 						
 					}
+					if(sendShot.responseText == 'lose=!you!')
+					{
+
+						var newLogin = getCook('login');
+						document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!you!; path=/; expires="
+						document.location.href = "/pages/endOfGame.html";
+					
+					}
+					if(sendShot.responseText == 'lose=!notyou!')
+					{
+						var newLogin = getCook('login');
+						document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!notyou!; path=/; expires="
+						document.location.href = "/pages/endOfGame.html";
+					
+					}
+					
 					}
 				}
 				}
@@ -199,18 +192,18 @@ $('#enemy > table td').on('click', function()
 					alert("По этой клетки уже стреляли!");
 					
 				}
-				if(sendShot.responseText == 'lose=!one!')
+				if(sendShot.responseText == 'lose=!you!')
 				{
 
 					var newLogin = getCook('login');
-					document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!one!; path=/; expires="
+					document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!you!; path=/; expires="
 					document.location.href = "/pages/endOfGame.html";
 					
 				}
-				if(sendShot.responseText == 'lose=!two!')
+				if(sendShot.responseText == 'lose=!notyou!')
 				{
 					var newLogin = getCook('login');
-					document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!two!; path=/; expires="
+					document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!notyou!; path=/; expires="
 					document.location.href = "/pages/endOfGame.html";
 					
 				}
