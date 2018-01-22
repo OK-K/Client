@@ -27,9 +27,13 @@ function setPlayerShips()
 							{
 								$('#' + i + '_' + j).addClass('hereShip')
 							}
-							if (deck == '-1' || deck == '-2' || deck =='-3' || deck == '-4' || deck == '0')
+							if (deck == '-1' || deck == '-2' || deck =='-3' || deck == '-4')
 							{
 								$('#' + i + '_' + j).addClass('hitting');
+							}
+							if( deck == '0')
+							{
+								$('#' + i + '_' + j).addClass('deadShip');
 							}
 							if (deck == '-5')
 								$('#' + i + '_' + j).addClass('missing');
@@ -44,9 +48,13 @@ function setPlayerShips()
 							$('#' + i + '_' + j + '_E').removeClass('hereShip')
 							var deck = getDeck(i + '_' + j,jsonMatrPlayer);
 							
-							if (deck == '-1' || deck == '-2' || deck =='-3' || deck == '-4' || deck == '0')
+							if (deck == '-1' || deck == '-2' || deck =='-3' || deck == '-4')
 							{
 								$('#' + i + '_' + j + '_E').addClass('hitting');
+							}
+							if( deck == '0')
+							{
+								$('#' + i + '_' + j + '_E').addClass('deadShip');
 							}
 							if (deck == '-5')
 								$('#' + i + '_' + j + '_E').addClass('missing');

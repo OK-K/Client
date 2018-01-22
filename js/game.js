@@ -2,19 +2,60 @@
 $(document).ready(function(){
 	var mode = getCook('mode');
 	error = false;
-	getMyTurn();
-	if (turn)
+	
+	if (mode == 'playerwithplayer' && !error)
+	{
+		checkTurn = new XMLHttpRequest();
+		checkTurn.open('POST', '../getTurn', true);
+		checkTurn.send('login=!' + getCook("login") + "!");
+		checkTurn.onreadystatechange = function() {
+
+			if (checkTurn.readyState == 4) {
+				if (checkTurn.responseText == "1")
+				{
+					$('#message').html('<p >Ожидайте выстрела противника!</p> <br>');
+				}
+					
+				if (checkTurn.responseText == "0")
+				{
+					$('#message').html('<p >Ваш ход!</p> <br>');
+					setShipsAfterShot();
+				}
+			}
+	}
+	}
+	
+	
+	/*if (turn2)
 	{
 		$('#message').html('<p >Ваш ход!</p> <br>');
-	} else $('#message').html('<p >Ожидайте выстрела противника!</p> <br>');
+	} else $('#message').html('<p >Ожидайте выстрела противника!</p> <br>'); */
 	
 	setInterval(function(){
-		getMyTurn();
-		if (turn)
-		{
-			$('#message').html('<p >Ваш ход!</p> <br>');
-		} else $('#message').html('<p >Ожидайте выстрела противника!</p> <br>');
-	},3000);
+		if (mode == 'playerwithplayer' && !error)
+	{
+		checkTurn = new XMLHttpRequest();
+		checkTurn.open('POST', '../getTurn', true);
+		checkTurn.send('login=!' + getCook("login") + "!");
+		checkTurn.onreadystatechange = function() {
+
+			if (checkTurn.readyState == 4) {
+				if (checkTurn.responseText == "1")
+				{
+					setShipsAfterShot();
+					$('#message').html('<p >Ожидайте выстрела противника!</p> <br>');
+				}
+					
+				if (checkTurn.responseText == "0")
+				{
+					$('#message').html('<p >Ваш ход!</p> <br>');
+					setShipsAfterShot();
+				}
+			}
+	}
+	}
+		
+	},1500);
 	if (mode == 'playerwithplayer')
 	{
 		/*sendStopWait = new XMLHttpRequest();
@@ -50,9 +91,9 @@ $('#saveButt').on('click', function()
 	}
 });
 
-function getMyTurn()
+/*function getMyTurn()
 {
-	turn = false;
+	turn2 = false;
 	var mode = getCook('mode');
 	if (mode == 'playerwithplayer' && !error)
 	{
@@ -64,49 +105,83 @@ function getMyTurn()
 			if (checkTurn.readyState == 4) {
 				if (checkTurn.responseText == "1")
 				{
-					turn = false;
+					text1 = checkTurn.responseText;
+					turn2 = false;
+					return;
 				}
+					
 				if (checkTurn.responseText == "0")
-					turn = true;
+				{
+					turn2 = true;
+					text1 = checkTurn.responseText;
+					return;
+				}
+				return;
 			}
-	}
+			return;
 	}
 	return;
-}
+	}
+	return;
+} */
 
 $('#enemy > table td').on('click', function()
 {
 	var mode = getCook('mode');
+	var shot_id = $(this).attr('id');
 	
 	if (mode == 'playerwithplayer')
 	{
-		if (turn)
-		{
-			var shot_id = $(this).attr('id');
-			sendShot = new XMLHttpRequest();
-			sendShot.open('POST', '../sendShotPlayer', true);
-			sendShot.send('login=!' + getCook("login") + "!shot=!" + shot_id + "!");
-			sendShot.onreadystatechange = function() {
-				if (sendShot.readyState == 4) {
-				if (sendShot.responseText == "1")
+		
+		checkTurn = new XMLHttpRequest();
+		checkTurn.open('POST', '../getTurn', true);
+		checkTurn.send('login=!' + getCook("login") + "!");
+		checkTurn.onreadystatechange = function() {
+
+			if (checkTurn.readyState == 4) {
+				if (checkTurn.responseText == "1")
 				{
-					setShipsAfterShot();
+					alert('Сейчас не ваш ход!');
 				}
-				if (sendShot.responseText == "2")
-				{
-					setShipsAfterShot();
-					getMyTurn();
-				}
-				if(sendShot.responseText == 'same')
-				{
-					alert("По этой клетки уже стреляли!");
 					
+				if (checkTurn.responseText == "0")
+				{
+					setShipsAfterShot();
+					//var shot_id = $(this).attr('id');
+					sendShot = new XMLHttpRequest();
+					sendShot.open('POST', '../sendShotPlayer', true);
+					sendShot.send('login=!' + getCook("login") + "!shot=!" + shot_id + "!");
+					sendShot.onreadystatechange = function() {
+					if (sendShot.readyState == 4) {
+					if (sendShot.responseText == "1")
+					{
+						setShipsAfterShot();
+					}
+					if (sendShot.responseText == "2")
+					{
+						setShipsAfterShot();
+						$('#message').html('<p >Ожидайте выстрела противника!</p> <br>');
+						//getMyTurn();
+					}
+					if(sendShot.responseText == 'same')
+					{
+						alert("По этой клетки уже стреляли!");
+						
+					}
+					}
 				}
 				}
 			}
+	}
+		
+		
+		
+		
+		
 			
-		} else alert('Сейчас не ваш ход!');
-	} 
+			
+		 
+	} else  {
 	var shot_id = $(this).attr('id');
 	sendShot = new XMLHttpRequest();
 	sendShot.open('POST', '../sendShotAI', true);
@@ -141,6 +216,7 @@ $('#enemy > table td').on('click', function()
 				}
 			}
 			};
+}
 });
 
 
@@ -165,9 +241,13 @@ function setShipsAfterShot()
 							{
 								$('#' + i + '_' + j).addClass('hereShip')
 							}
-							if (deck == '-1' || deck == '-2' || deck =='-3' || deck == '-4' || deck == '0')
+							if (deck == '-1' || deck == '-2' || deck =='-3' || deck == '-4')
 							{
 								$('#' + i + '_' + j).addClass('hitting')
+							}
+							if( deck == '0')
+							{
+								$('#' + i + '_' + j).addClass('deadShip');
 							}
 							if (deck == '-5')
 							{
@@ -181,9 +261,13 @@ function setShipsAfterShot()
 						for (var j = 0; j < 10; j++)
 						{
 							var deck = getDeck(i + '_' + j,jsonMatrPlayer);
-							if (deck == '-1' || deck == '-2' || deck =='-3' || deck == '-4' || deck == '0')
+							if (deck == '-1' || deck == '-2' || deck =='-3' || deck == '-4')
 							{
 								$('#' + i + '_' + j + '_E').addClass('hitting')
+							}
+							if( deck == '0')
+							{
+								$('#' + i + '_' + j + '_E').addClass('deadShip');
 							}
 							if (deck == '-5')
 							{
