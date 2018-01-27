@@ -91,8 +91,21 @@ $('#playAgain').on('click', function (e) {
 $('#endGame').on('click', function (e) {
 	
 	var newLogin = getCook('login');
-	document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!you!; path=/; expires=";
-	document.location.href = "../pages/endOfGame.html";
+	deleteGame = new XMLHttpRequest();
+	deleteGame.open('POST', '../deleteGame', true);
+	deleteGame.send('login=!' + newLogin + "!");
+	deleteGame.onreadystatechange = function() {
+
+	if (deleteGame.readyState == 4) {
+		if (deleteGame.responseText == "1")
+		{
+			
+			document.cookie = "login=!" + newLogin + "!mode=!none!save=!none!lose=!you!; path=/; expires=";
+			document.location.href = "../pages/endOfGame.html";
+		}
+	}
+	}
+	
 	
 });
 $('#playButt').on('click', function (e) {
